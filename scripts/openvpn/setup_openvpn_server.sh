@@ -55,4 +55,6 @@ esac
 read -p 'Range IP VPN' ipvpn netmask
 sed -i "s|server 10.8.0.0 255.255.255.0|server $ipvpn $netmask|g" /etc/openvpn/server.conf
 echo 'Start OpenVPN service'
-service openvpn start
+# Fix for Centos7
+systemctl -f enable openvpn@server.service
+systemctl start openvpn@server.service
