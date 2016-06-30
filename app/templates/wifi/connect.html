@@ -21,6 +21,8 @@
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='jumbotron-narrow.css') }}" rel="stylesheet">
 
+    <script src="{{ url_for('static', filename='assets/js/jquery-3.0.0.min.js') }}"></script>
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="{{ url_for('static', filename='assets/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
     <script src="{{ url_for('static', filename='assets/js/ie-emulation-modes-warning.js') }}"></script>
@@ -51,10 +53,12 @@
           <form name="connectwifi" id="connectwifi" class="form-horizontal" role="form" method="POST" action="{{ url_for('wifi.connect') }}">
             <p class="lead">
               <p> Protect your privacy and security online!</p>
-                {% if message is not none %}
+                {% if error %}
                     <div class="alert alert-danger" role="alert">{{ message }}</div>
                 {% else %}
-                    <div class="alert alert-success" role="alert">OK</div>
+                    {% if message %}
+                        <div class="alert alert-success" role="alert">{{ message }}</div>
+                    {% endif %}
                 {% endif %}
                 <div style="margin-bottom: 25px" class="input-group input-group-lg">
                   <span class="input-group-addon"><i class="glyphicon glyphicon-signal"></i></span>
@@ -70,7 +74,9 @@
                 </div>
             </p>
             <p>
-                <button type="submit" class="btn btn-lg btn-success" aria-label="Left Align" >Connect to WIFI</button>
+                <button {% if error %}disabled{% endif %} type="button" id="btnScanning" class="btn btn-lg btn-info" aria-label="Left Align" >Scan</button>
+                <button {% if error %}disabled{% endif %} type="submit" class="btn btn-lg btn-success" aria-label="Right Align" >Connect to WIFI</button>
+
             </p>
           </form>
       </div>
@@ -108,6 +114,42 @@
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{{ url_for('static', filename='assets/js/ie10-viewport-bug-workaround.js') }}"></script>
+    <script>
+         $(document).ready(function() {
+            $("#btnScanning").click(function() {
+                var self = this;
+                $(self).toggleClass("disabled");
+                $(self).prop("disabled", true);
+                $(self).text("Scanning ...");
+                $.ajax("{{ url_for('wifi.scan') }}", {
+                 "method" : "GET",
+                  "success" : function (data) {
+                      try {
+                          var listSSID = data["ssid"];
+                          console.log(listSSID);
+                          $("#sel1").html("");
+                          $.each(listSSID, function(index, val) {
+                              $("#sel1").append("<option value='" + val + "'>"+ val +"</option>");
+                          });
+                          $(self).toggleClass("disabled");
+                          $(self).text("Scan");
+                          $(self).prop("disabled", false);
+                      } catch(e) {
+                          $(self).toggleClass("disabled");
+                          $(self).text("Scan");
+                          $(self).prop("disabled", false);
+                      }
+
+                  },
+                  "error": function() {
+                        $(self).toggleClass("disabled");
+                        $(self).text("Scan");
+                        $(self).prop("disabled", false);
+                  }
+                });
+            });
+         });
+    </script>
 
   </body>
 </html>

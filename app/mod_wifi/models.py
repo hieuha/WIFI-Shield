@@ -7,22 +7,29 @@ class Wifi:
         self.ssid = ""
         self.password = ""
         self.interface = app.config["INTERFACE"]
-        self.networks = {"ssid": []}
+        self.networks = {"ssid": [], "message": None, "error": False}
         self.cells = None
 
     def scan(self):
+        message = None
+        error = False
         network = list()
-        self.cells = Cell.all(self.interface)
-        for n in self.cells:
-            ssid = n.ssid
-            if ssid is not None and ssid != "":
-                network.append(ssid)
-        self.networks["ssid"] = network
+        try:
+            self.cells = Cell.all(self.interface)
+            for n in self.cells:
+                ssid = n.ssid
+                if ssid is not None and ssid != "":
+                    network.append(ssid)
+            self.networks["ssid"] = network
+        except Exception, e:
+            self.networks["message"] = e
+            self.networks["error"] = True
         return self.networks
 
     def connect(self):
         cell = None
         message = None
+        error = False
         if self.ssid != "":
             for i,v in enumerate(self.cells):
                 if v.ssid == self.ssid:
@@ -44,7 +51,9 @@ class Wifi:
                         message = None
                     except Exception, e:
                         message = e
+                        error = True
                 except Exception, e:
                     message = e
+                    error = True
 
-        return message
+        return message, error

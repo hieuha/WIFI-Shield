@@ -82,3 +82,8 @@ body {
     border-bottom: 0;
   }
 }
+
+.disabled {
+  disable: True;
+  opacity: 0.5;
+}
