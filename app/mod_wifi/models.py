@@ -48,7 +48,8 @@ class Wifi:
                     scheme.save()
                     try:
                         scheme.activate()
-                        message = None
+                        message = "OK"
+                        error = False
                     except Exception, e:
                         message = e
                         error = True
