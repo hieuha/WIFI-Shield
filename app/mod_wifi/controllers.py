@@ -26,7 +26,7 @@ def connect():
         wifi.password = password
         message, error = wifi.connect()
         if not error:
-            return redirect(url_for('dashboard.status'))
+            return redirect(url_for('dashboard.index'))
     return render_template("wifi/connect.html",
                            networks=networks,
                            message=message,
