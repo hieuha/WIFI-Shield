@@ -8,6 +8,6 @@ def index():
     return render_template("home/index.html")
 
 
-@mod_page.route("/how-it-works", methods=["GET"])
+@mod_page.route("how-it-works", methods=["GET"])
 def how():
     return render_template("home/how.html")
