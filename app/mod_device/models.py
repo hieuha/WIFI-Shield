@@ -1,7 +1,6 @@
 from app import app
 import netifaces
-import os
-
+import subprocess
 
 class Device(object):
     def __init__(self):
@@ -20,8 +19,11 @@ class Device(object):
         pass
 
     def check_internet(self):
-        response = os.system("ping -c 1 google.com")
-        if response == 0:
+        try:
+            output = subprocess.Popen(["/bin/ping", "-c 1", "google.com"], stdout=subprocess.PIPE).communicate()
+            output = str(output[0]).strip()
+            if "" == output:
+                return False
             return True
-        return False
-
+        except:
+            return False
