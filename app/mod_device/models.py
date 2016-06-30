@@ -1,5 +1,6 @@
 from app import app
 import netifaces
+import os
 
 
 class Device(object):
@@ -14,3 +15,10 @@ class Device(object):
 
     def battery(self):
         pass
+
+    def check_internet(self):
+        response = os.system("ping -c 1 google.com")
+        if response == 0:
+            return True
+        return False
+

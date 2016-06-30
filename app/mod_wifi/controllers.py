@@ -15,7 +15,7 @@ def scan():
 @mod_wifi.route('/connect', methods=['GET', 'POST'])
 def connect():
     networks = wifi.networks
-    # networks = wifi.scan()
+    networks = wifi.scan()
     message = networks["message"]
     error = networks["error"]
     if request.method == "POST":
