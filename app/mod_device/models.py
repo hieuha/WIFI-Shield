@@ -9,8 +9,11 @@ class Device(object):
 
     def interfaces(self):
         for interface in netifaces.interfaces():
-            for link in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
-                self.list_interfaces[interface] = link['addr']
+            try:
+                for link in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
+                    self.list_interfaces[interface] = link['addr']
+            except Exception, e:
+                pass
         return self.list_interfaces
 
     def battery(self):
