@@ -31,9 +31,3 @@ def connect():
                            networks=networks,
                            message=message,
                            error=error)
-
-@mod_wifi.route('/interfaces', methods=["GET"])
-def interfaces():
-    ifcfg = wifi.get_interfaces()
-    if ifcfg is not None:
-        return jsonify(ifcfg)
