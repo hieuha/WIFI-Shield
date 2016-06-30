@@ -1,6 +1,7 @@
 #!/bin/bash
 echo 'Install OpenVPN From Repo'
 yum -y install openvpn easy-rsa
+yum -y install iptables-services
 echo 'Copy Example Configurations To Folder'
 cp /usr/share/doc/openvpn-*/sample/sample-config-files/server.conf /etc/openvpn/server.conf
 echo 'Copy Easy-RSA'
@@ -55,6 +56,20 @@ esac
 read -p 'Range IP VPN' ipvpn netmask
 sed -i "s|server 10.8.0.0 255.255.255.0|server $ipvpn $netmask|g" /etc/openvpn/server.conf
 echo 'Start OpenVPN service'
+
+# Firewall
+systemctl mask firewalld
+systemctl enable iptables
+systemctl stop firewalld
+systemctl start iptables
+iptables --flush
+iptables -t nat -A POSTROUTING -s $ipvpn/$netmask -o eth0 -j MASQUERADE
+iptables-save > /etc/sysconfig/iptables
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sysctl -p
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
 # Fix for Centos7
 systemctl -f enable openvpn@server.service
 systemctl start openvpn@server.service
+systemctl restart network.service
