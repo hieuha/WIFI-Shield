@@ -5,6 +5,7 @@ app.config.from_pyfile("../config.cfg")
 
 from app.mod_wifi.controllers import mod_wifi as wifi_module
 from app.mod_dashboard.controllers import mod_dashboard as dashboard_module
+from app.mod_device.controllers import mod_device as device_module
 
 
 @app.errorhandler(404)
@@ -14,3 +15,4 @@ def not_found(error):
 
 app.register_blueprint(wifi_module)
 app.register_blueprint(dashboard_module)
+app.register_blueprint(device_module)
