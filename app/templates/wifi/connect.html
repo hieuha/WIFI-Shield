@@ -1,155 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+{% extends "layout/index.html" %}
+{% block body %}
+<h2>WIFI CONFIGURATION</h2>
+<form name="connectwifi" id="connectwifi" class="form-horizontal" role="form" method="POST" action="{{ url_for('wifi.connect') }}">
+<p class="lead">
+  <p> Protect your privacy and security online!</p>
+    {% if error %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+    {% else %}
+        {% if message %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% endif %}
+    {% endif %}
+    <div style="margin-bottom: 25px" class="input-group input-group-lg">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-signal"></i></span>
+        <select class="form-control" id="sel1" name="ssid">
+            {% for network in networks["ssid"] %}
+            <option value="{{ network }}">{{ network }}</option>
+            {% endfor%}
+        </select>
+    </div>
+    <div style="margin-bottom: 25px" class="input-group input-group-lg">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+      <input type="password" class="form-control" name="password" placeholder="Password">
+    </div>
+</p>
+<p>
+    <button {% if error %}disabled{% endif %} type="button" id="btnScanning" class="btn btn-lg btn-info" aria-label="Left Align" >Scan</button>
+    <button {% if error %}disabled{% endif %} type="submit" class="btn btn-lg btn-success" aria-label="Right Align" >Connect to WIFI</button>
 
-    <title>WIFI SHIELD - AP HOTSPOT</title>
-
-    <!-- Bootstrap core CSS -->
-
-    <link href="{{ url_for('static', filename='dist/css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="{{ url_for('static', filename='assets/css/ie10-viewport-bug-workaround.css') }}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{{ url_for('static', filename='jumbotron-narrow.css') }}" rel="stylesheet">
-
-    <script src="{{ url_for('static', filename='assets/js/jquery-3.0.0.min.js') }}"></script>
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="{{ url_for('static', filename='assets/js/ie8-responsive-file-warning.js') }}"></script><![endif]-->
-    <script src="{{ url_for('static', filename='assets/js/ie-emulation-modes-warning.js') }}"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-
-    <div class="container">
-      <div class="header clearfix">
-        <!-- <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">About</a></li>
-            <li role="presentation"><a href="#">Contact</a></li>
-          </ul>
-        </nav> -->
-        <h3 class="text-muted">WIFI SHIELD</h3>
-      </div>
-
-      <div class="jumbotron">
-        <h2>WIFI CONFIGURATION</h2>
-          <form name="connectwifi" id="connectwifi" class="form-horizontal" role="form" method="POST" action="{{ url_for('wifi.connect') }}">
-            <p class="lead">
-              <p> Protect your privacy and security online!</p>
-                {% if error %}
-                    <div class="alert alert-danger" role="alert">{{ message }}</div>
-                {% else %}
-                    {% if message %}
-                        <div class="alert alert-success" role="alert">{{ message }}</div>
-                    {% endif %}
-                {% endif %}
-                <div style="margin-bottom: 25px" class="input-group input-group-lg">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-signal"></i></span>
-                    <select class="form-control" id="sel1" name="ssid">
-                        {% for network in networks["ssid"] %}
-                        <option value="{{ network }}">{{ network }}</option>
-                        {% endfor%}
-                    </select>
-                </div>
-                <div style="margin-bottom: 25px" class="input-group input-group-lg">
-                  <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                  <input type="password" class="form-control" name="password" placeholder="Password">
-                </div>
-            </p>
-            <p>
-                <button {% if error %}disabled{% endif %} type="button" id="btnScanning" class="btn btn-lg btn-info" aria-label="Left Align" >Scan</button>
-                <button {% if error %}disabled{% endif %} type="submit" class="btn btn-lg btn-success" aria-label="Right Align" >Connect to WIFI</button>
-
-            </p>
-          </form>
-      </div>
-
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>Keep Your Privacy</h4>
-          <p>Stop your provider and wireless network providers, like coffe shops, hotels, and airports, from monitoring your activity.</p>
-
-          <h4>Enjoy Content</h4>
-          <p>Say goodbye to blocked sites, with access to every site wherever you may be in the world.</p>
-
-          <h4>Protect Against Hackers</h4>
-          <p>Ensure a secure connection on any device while traveling. WIFI SHIELD blocks third parties to keep your device safe.</p>
-        </div>
-
-        <div class="col-lg-6">
-          <h4>Customize VPN Network</h4>
-          <p>WIFI SHIELD works with your trusted VPN.</p>
-
-          <h4>On Every Device</h4>
-          <p>WIFI SHIELD protects all your devices at the same time, with no additional setup. It even works with media streamers, stream on!</p>
-
-          <h4>Charge Your Devices</h4>
-          <p>Charge your devides with WIFI SHIELD's powerfull 8000 maH battery while commuting.</p>
-        </div>
-      </div>
-
-      <footer class="footer">
-        <p>&copy; 2016 Makerhanoi.</p>
-      </footer>
-
-    </div> <!-- /container -->
-
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{{ url_for('static', filename='assets/js/ie10-viewport-bug-workaround.js') }}"></script>
-    <script>
-         $(document).ready(function() {
-            $("#btnScanning").click(function() {
-                var self = this;
-                $(self).toggleClass("disabled");
-                $(self).prop("disabled", true);
-                $(self).text("Scanning ...");
-                $.ajax("{{ url_for('wifi.scan') }}", {
-                 "method" : "GET",
-                  "success" : function (data) {
-                      try {
-                          var listSSID = data["ssid"];
-                          console.log(listSSID);
-                          $("#sel1").html("");
-                          $.each(listSSID, function(index, val) {
-                              $("#sel1").append("<option value='" + val + "'>"+ val +"</option>");
-                          });
-                          $(self).toggleClass("disabled");
-                          $(self).text("Scan");
-                          $(self).prop("disabled", false);
-                      } catch(e) {
-                          $(self).toggleClass("disabled");
-                          $(self).text("Scan");
-                          $(self).prop("disabled", false);
-                      }
-
-                  },
-                  "error": function() {
-                        $(self).toggleClass("disabled");
-                        $(self).text("Scan");
-                        $(self).prop("disabled", false);
-                  }
-                });
-            });
-         });
-    </script>
-
-  </body>
-</html>
+</p>
+</form>
+<script src="{{ url_for('static', filename='assets/js/wifi.js') }}"></script>
+{% endblock %}

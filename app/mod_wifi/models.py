@@ -28,8 +28,6 @@ class Wifi:
 
     def connect(self):
         cell = None
-        message = None
-        error = False
         if self.ssid != "":
             for i,v in enumerate(self.cells):
                 if v.ssid == self.ssid:
@@ -56,5 +54,8 @@ class Wifi:
                 except Exception, e:
                     message = e
                     error = True
-
         return message, error
+
+
+    def current_ip(self):
+        pass
