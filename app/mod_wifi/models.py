@@ -1,5 +1,6 @@
 from app import app
 from wifi import Cell, Scheme
+import netifaces
 
 
 class Wifi:
@@ -27,6 +28,8 @@ class Wifi:
         return self.networks
 
     def connect(self):
+        message = None
+        error = False
         cell = None
         if self.ssid != "":
             for i,v in enumerate(self.cells):
@@ -56,6 +59,10 @@ class Wifi:
                     error = True
         return message, error
 
-
-    def current_ip(self):
-        pass
+    @staticmethod
+    def get_interfaces():
+        lst_interfaces = dict()
+        for interface in netifaces.interfaces():
+            for link in netifaces.ifaddresses(interface)[netifaces.AF_INET]:
+                lst_interfaces[interface] = link['addr']
+        return lst_interfaces
