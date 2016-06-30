@@ -1,5 +1,7 @@
 {% extends "layout/index.html" %}
 {% block body %}
+<div class="jumbotron">
+
 <h2>WIFI CONFIGURATION</h2>
 <form name="connectwifi" id="connectwifi" class="form-horizontal" role="form" method="POST" action="{{ url_for('wifi.connect') }}">
 <p class="lead">
@@ -31,4 +33,5 @@
 </p>
 </form>
 <script src="{{ url_for('static', filename='assets/js/wifi.js') }}"></script>
+</div>
 {% endblock %}

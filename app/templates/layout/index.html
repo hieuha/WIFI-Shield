@@ -45,39 +45,13 @@
               <ul class="nav nav-pills pull-right">
                 <li role="presentation" class="active"><a href="#">Home</a></li>
                 <li role="presentation"><a href="#">How it works</a></li>
-                <li role="presentation"><a href="#">Contact</a></li>
+                <li role="presentation"><a href="{{ url_for("dashboard.index") }}">Dashboard</a></li>
               </ul>
             </nav>
             <h3 class="text-muted">WIFI SHIELD</h3>
     </div>
-      <div class="jumbotron">
       {% block body %}
       {% endblock %}
-      </div>
-
-    <div class="row marketing">
-            <div class="col-lg-6">
-              <h4>Keep Your Privacy</h4>
-              <p>Stop your provider and wireless network providers, like coffe shops, hotels, and airports, from monitoring your activity.</p>
-
-              <h4>Enjoy Content</h4>
-              <p>Say goodbye to blocked sites, with access to every site wherever you may be in the world.</p>
-
-              <h4>Protect Against Hackers</h4>
-              <p>Ensure a secure connection on any device while traveling. WIFI SHIELD blocks third parties to keep your device safe.</p>
-            </div>
-
-            <div class="col-lg-6">
-              <h4>Customize VPN Network</h4>
-              <p>WIFI SHIELD works with your trusted VPN.</p>
-
-              <h4>On Every Device</h4>
-              <p>WIFI SHIELD protects all your devices at the same time, with no additional setup. It even works with media streamers, stream on!</p>
-
-              <h4>Charge Your Devices</h4>
-              <p>Charge your devides with WIFI SHIELD's powerfull 8000 maH battery while commuting.</p>
-            </div>
-    </div>
     <footer class="footer">
         <p>&copy; 2016 Makerhanoi.</p>
     </footer>

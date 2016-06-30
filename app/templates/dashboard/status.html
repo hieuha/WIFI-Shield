@@ -1,5 +1,7 @@
 {% extends "layout/index.html" %}
 {% block body %}
+<div class="jumbotron">
+
 <h4 align="left">Battery Remaining</h4>
 <div class="progress">
    <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
@@ -8,16 +10,18 @@
 </div>
 <h4 align="left">IP Address</h4>
 <div class="row">
-    <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h5>Thumbnail label</h5>
-        <p>...</p>
-      </div>
-    </div>
-    </div>
+    {% for interface in interfaces %}
+        <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="caption">
+            <h5>{{ interface }}</h5>
+            <p>{{ interfaces[interface] }}</p>
+          </div>
+        </div>
+        </div>
+    {% endfor %}
 </div>
 <h4 align="left">VPN Status</h4>
+</div>
 
 {% endblock %}
