@@ -10,3 +10,9 @@ def list_vpn():
     vpns = vpn.get_list()
     response["list"] = vpns
     return jsonify(response)
+
+
+@mod_vpn.route("/external_ip", methods=["GET"])
+def external_ip():
+    ip = vpn.external_ip()
+    return jsonify({"ip": ip})

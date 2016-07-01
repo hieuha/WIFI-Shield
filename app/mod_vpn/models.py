@@ -1,6 +1,7 @@
 import os
 from app import app
 from re import search
+import ipgetter
 
 VPN_FOLDER = app.config["BASE_DIR"] + "/openvpn/"
 
@@ -43,3 +44,7 @@ class VPN(object):
             _vpn["ip"] = parse_ip(conf)
             self.vpns[vpn] = _vpn
         return self.vpns
+
+    def external_ip(self):
+        ip = ipgetter.myip()
+        return ip
