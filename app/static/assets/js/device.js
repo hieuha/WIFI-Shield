@@ -28,7 +28,7 @@ var ip = {
         this.$dom.html($msg)
     },
     onSuccess: function (data) {
-        var $msg = $('<div class="alert alert-info" role="alert"></div>')
+        var $msg = $('<div class="alert alert-success" role="alert"></div>')
         $msg.text(data.message)
         this.$dom.html($msg)
     },
