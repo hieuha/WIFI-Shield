@@ -18,12 +18,10 @@ def parse_ip(conf):
     return ip
 
 
-
 class VPN(object):
 
     def __init__(self):
         self.vpns = dict()
-
 
     def connect(self):
         pass

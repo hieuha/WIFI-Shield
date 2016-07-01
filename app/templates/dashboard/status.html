@@ -23,6 +23,19 @@
     {% endfor %}
 </div>
 <h4 align="left">VPN Status</h4>
+<div class="row">
+    {% for vpn in vpns %}
+        <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+          <div class="caption">
+            <h5>{{ vpn }}</h5>
+            <p>{{ vpns[vpn]["ip"] }}</p>
+          </div>
+        </div>
+        </div>
+    {% endfor %}
+</div>
+
 </div>
 <script src="{{ url_for('static', filename='assets/js/device.js') }}"></script>
 
