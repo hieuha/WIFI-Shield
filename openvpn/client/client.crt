@@ -1,0 +1,94 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 2 (0x2)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=VN, ST=HN, L=Hanoi, O=Makerhanoi, OU=Makerhanoi, CN=Makerhanoi CA/name=server/emailAddress=hieuht@0x1115.org
+        Validity
+            Not Before: Jul  1 07:50:41 2016 GMT
+            Not After : Jun 29 07:50:41 2026 GMT
+        Subject: C=VN, ST=HN, L=Hanoi, O=Makerhanoi, OU=Makerhanoi, CN=client/name=server/emailAddress=hieuht@0x1115.org
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:b5:bc:26:5d:03:86:ca:38:42:eb:f6:5d:c6:2a:
+                    80:d4:c8:df:50:e1:40:a2:88:68:1c:b5:95:90:9d:
+                    a3:1e:ac:ad:66:be:fd:0d:c9:f8:40:96:d9:92:77:
+                    21:8b:f3:f8:86:1f:7d:4a:56:70:7c:c1:46:c9:85:
+                    ce:ec:91:e9:f3:fb:07:1b:2c:67:a7:0b:54:7e:df:
+                    02:be:ff:3b:09:20:52:3c:78:0f:66:7d:66:09:0d:
+                    a5:87:76:86:bd:ea:84:2e:52:b3:a4:20:2c:b9:97:
+                    be:a2:44:19:12:19:f1:79:24:b2:43:41:9c:79:ad:
+                    b4:72:bf:49:68:a7:64:b4:ca:81:49:d5:58:ba:d1:
+                    ef:a7:cb:1e:79:6a:ac:38:a3:2d:6c:15:a3:fc:b8:
+                    3d:57:0c:b9:7e:d6:e7:4b:8c:f5:ae:45:43:45:24:
+                    e1:fc:f5:bd:de:86:81:f3:bb:d6:04:86:76:f4:be:
+                    3d:82:d4:91:27:e8:4c:2f:aa:38:99:25:b3:2b:88:
+                    e2:05:d0:e7:6c:82:41:f0:14:f2:50:1f:c4:73:74:
+                    98:7e:1b:62:51:b1:05:68:07:1e:ae:82:c1:ad:d6:
+                    3e:5b:64:a3:8a:d6:de:99:15:f4:59:19:4f:b0:40:
+                    47:cc:e9:fa:59:77:06:53:af:37:f3:0a:ca:28:c3:
+                    da:e7
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Comment: 
+                Easy-RSA Generated Certificate
+            X509v3 Subject Key Identifier: 
+                09:D6:EE:1A:9B:A2:D4:AD:BC:C9:E3:C3:74:50:61:E0:9E:73:A8:06
+            X509v3 Authority Key Identifier: 
+                keyid:46:47:F8:22:7F:F5:21:F7:BE:A4:F8:D2:13:21:C2:2C:F1:F9:48:94
+                DirName:/C=VN/ST=HN/L=Hanoi/O=Makerhanoi/OU=Makerhanoi/CN=Makerhanoi CA/name=server/emailAddress=hieuht@0x1115.org
+                serial:B2:88:61:EE:13:64:A4:56
+
+            X509v3 Extended Key Usage: 
+                TLS Web Client Authentication
+            X509v3 Key Usage: 
+                Digital Signature
+    Signature Algorithm: sha256WithRSAEncryption
+         68:8b:3e:bd:09:f5:21:97:d3:c6:12:42:c7:f2:46:96:e7:de:
+         e6:37:72:b8:bb:2c:80:09:fc:08:f2:79:d6:8b:e7:f3:bc:e1:
+         30:61:82:42:d6:cd:b7:e0:c8:58:e9:e4:54:48:cc:b3:3e:05:
+         62:ea:63:cb:e9:d2:58:f2:76:f5:d1:b2:5e:24:41:01:f9:22:
+         e0:1d:0a:d2:96:98:bf:79:61:e2:c6:50:cf:b0:33:11:e4:dc:
+         dd:f8:a3:31:3a:72:68:89:a4:69:28:58:42:a3:05:5e:96:54:
+         88:d7:f9:80:02:28:c3:34:fc:2d:c0:ef:a9:5f:f0:83:f5:97:
+         6c:cf:8e:0e:25:bd:5c:21:d1:78:a2:53:78:66:1f:fc:35:a7:
+         f1:26:d5:ba:68:d3:83:3d:cc:cf:89:8c:96:02:5b:70:77:da:
+         6c:79:50:4e:fe:c6:0c:5d:00:9c:df:32:01:4f:e9:49:1d:12:
+         50:f2:12:49:87:19:32:8b:0d:ae:67:fb:23:40:88:30:ab:1f:
+         05:38:6b:6e:f9:d6:11:29:38:94:95:47:b9:a5:cb:b6:d9:a5:
+         79:cc:61:08:a6:ed:52:63:63:dd:02:8e:44:d3:03:70:fc:e0:
+         a4:dc:17:f7:57:d7:17:f0:e4:60:b9:b3:f0:7e:da:60:99:1b:
+         3e:ed:16:79
+-----BEGIN CERTIFICATE-----
+MIIFDDCCA/SgAwIBAgIBAjANBgkqhkiG9w0BAQsFADCBnzELMAkGA1UEBhMCVk4x
+CzAJBgNVBAgTAkhOMQ4wDAYDVQQHEwVIYW5vaTETMBEGA1UEChMKTWFrZXJoYW5v
+aTETMBEGA1UECxMKTWFrZXJoYW5vaTEWMBQGA1UEAxMNTWFrZXJoYW5vaSBDQTEP
+MA0GA1UEKRMGc2VydmVyMSAwHgYJKoZIhvcNAQkBFhFoaWV1aHRAMHgxMTE1Lm9y
+ZzAeFw0xNjA3MDEwNzUwNDFaFw0yNjA2MjkwNzUwNDFaMIGYMQswCQYDVQQGEwJW
+TjELMAkGA1UECBMCSE4xDjAMBgNVBAcTBUhhbm9pMRMwEQYDVQQKEwpNYWtlcmhh
+bm9pMRMwEQYDVQQLEwpNYWtlcmhhbm9pMQ8wDQYDVQQDEwZjbGllbnQxDzANBgNV
+BCkTBnNlcnZlcjEgMB4GCSqGSIb3DQEJARYRaGlldWh0QDB4MTExNS5vcmcwggEi
+MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC1vCZdA4bKOELr9l3GKoDUyN9Q
+4UCiiGgctZWQnaMerK1mvv0NyfhAltmSdyGL8/iGH31KVnB8wUbJhc7skenz+wcb
+LGenC1R+3wK+/zsJIFI8eA9mfWYJDaWHdoa96oQuUrOkICy5l76iRBkSGfF5JLJD
+QZx5rbRyv0lop2S0yoFJ1Vi60e+nyx55aqw4oy1sFaP8uD1XDLl+1udLjPWuRUNF
+JOH89b3ehoHzu9YEhnb0vj2C1JEn6EwvqjiZJbMriOIF0OdsgkHwFPJQH8RzdJh+
+G2JRsQVoBx6ugsGt1j5bZKOK1t6ZFfRZGU+wQEfM6fpZdwZTrzfzCsoow9rnAgMB
+AAGjggFWMIIBUjAJBgNVHRMEAjAAMC0GCWCGSAGG+EIBDQQgFh5FYXN5LVJTQSBH
+ZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0OBBYEFAnW7hqbotStvMnjw3RQYeCe
+c6gGMIHUBgNVHSMEgcwwgcmAFEZH+CJ/9SH3vqT40hMhwizx+UiUoYGlpIGiMIGf
+MQswCQYDVQQGEwJWTjELMAkGA1UECBMCSE4xDjAMBgNVBAcTBUhhbm9pMRMwEQYD
+VQQKEwpNYWtlcmhhbm9pMRMwEQYDVQQLEwpNYWtlcmhhbm9pMRYwFAYDVQQDEw1N
+YWtlcmhhbm9pIENBMQ8wDQYDVQQpEwZzZXJ2ZXIxIDAeBgkqhkiG9w0BCQEWEWhp
+ZXVodEAweDExMTUub3JnggkAsohh7hNkpFYwEwYDVR0lBAwwCgYIKwYBBQUHAwIw
+CwYDVR0PBAQDAgeAMA0GCSqGSIb3DQEBCwUAA4IBAQBoiz69CfUhl9PGEkLH8kaW
+597mN3K4uyyACfwI8nnWi+fzvOEwYYJC1s234MhY6eRUSMyzPgVi6mPL6dJY8nb1
+0bJeJEEB+SLgHQrSlpi/eWHixlDPsDMR5Nzd+KMxOnJoiaRpKFhCowVellSI1/mA
+AijDNPwtwO+pX/CD9Zdsz44OJb1cIdF4olN4Zh/8NafxJtW6aNODPczPiYyWAltw
+d9pseVBO/sYMXQCc3zIBT+lJHRJQ8hJJhxkyiw2uZ/sjQIgwqx8FOGtu+dYRKTiU
+lUe5pcu22aV5zGEIpu1SY2PdAo5E0wNw/OCk3Bf3V9cX8ORgubPwftpgmRs+7RZ5
+-----END CERTIFICATE-----
