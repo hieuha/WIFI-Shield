@@ -40,7 +40,7 @@ chmod +x ./setup_openvpn_server_centos.sh
 ./setup_openvpn_server_centos.sh
 ```
 Or you can see a tutorial at https://www.digitalocean.com/community/tutorials/how-to-set-up-an-openvpn-server-on-ubuntu-14-04
-   
+
 ### VPN Manual Setups
 ```
 sudo -s
@@ -48,5 +48,5 @@ sudo -s
 ```
 ## Screenshots
 ![WIFI-Shield](http://i.imgur.com/98zcwlk.png)
-![Dashboard](http://i.imgur.com/QZJ0CTq.png)
+![Dashboard](http://i.imgur.com/LvzybTA.png)
 ![Wifi Configuration](http://i.imgur.com/eGtCt1i.png)
