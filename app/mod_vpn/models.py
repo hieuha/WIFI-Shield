@@ -2,6 +2,8 @@ import os
 from app import app
 from re import search
 import ipgetter
+import subprocess
+
 
 VPN_FOLDER = app.config["BASE_DIR"] + "/openvpn/"
 
@@ -25,7 +27,8 @@ class VPN(object):
         self.vpns = dict()
 
     def connect(self):
-        pass
+        command = '/usr/sbin/openvpn %s' % VPN_FOLDER + "DO-SGP1/client.ovpn"
+        proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
     def disconnect(self):
         pass

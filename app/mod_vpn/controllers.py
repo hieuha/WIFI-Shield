@@ -16,3 +16,4 @@ def list_vpn():
 def external_ip():
     ip = vpn.external_ip()
     return jsonify({"ip": ip})
+

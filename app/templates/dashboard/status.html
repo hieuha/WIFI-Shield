@@ -28,7 +28,7 @@
     {% for vpn in vpns %}
         <div class="col-sm-6 col-md-4" id="{{ vpns[vpn]["ip"] }}">
         <div class="thumbnail">
-          <div class="caption alert-success">
+          <div class="caption">
             <h5>{{ vpn }}</h5>
             <p>{{ vpns[vpn]["ip"] }}</p>
           </div>
@@ -36,7 +36,7 @@
         </div>
     {% endfor %}
 </div>
-
+{#alert-success#}
 </div>
 <script src="{{ url_for('static', filename='assets/js/device.js') }}"></script>
 
