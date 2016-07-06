@@ -28,7 +28,8 @@ class VPN(object):
 
     def __init__(self):
         self.vpns = dict()
-        self.vpn_client_pid = 999999
+        self.vpn_client_pid = None
+        self.vpn_connected = None
 
     def connect(self, vpn):
         self.disconnect()
@@ -47,40 +48,44 @@ class VPN(object):
                 response["message"] = "Connected to VPN Server"
                 response["pid"] = self.vpn_client_pid
                 response["status"] = True
+                self.vpn_connected = vpn
             else:
                 response["message"] = "nohup or openvpn is not found!"
         return response
 
     def disconnect(self):
         try:
-            os.kill(self.vpn_client_pid, signal.SIGTERM)
+            if self.vpn_client_pid:
+                os.kill(self.vpn_client_pid, signal.SIGTERM)
+                self.vpn_connected = None
         except OSError:
             return False
         else:
             return True
 
     def status(self):
-        pid_path = "/proc/%s" % (self.vpn_client_pid)
+        pid_path = "/proc/%s" % self.vpn_client_pid
         if os.path.exists(pid_path):
             return True
         return False
 
-
     def get_list(self):
         vpn_configs = os.listdir(VPN_FOLDER)
-        _vpn = {"conf": None,
-               "ip": None,
-               "status": None,
-                "name": None}
-        _vpns = list()
         for vpn in vpn_configs:
+            _vpn = {"conf": None,
+                    "ip": None,
+                    "status": False,
+                    "name": None}
             vpn_path = VPN_FOLDER + vpn
             if os.path.isdir(vpn_path):
-                conf =  vpn_path + "/" + "client.ovpn"
+                conf = vpn_path + "/" + "client.ovpn"
                 _vpn["conf"] = conf
                 _vpn["ip"] = parse_ip(conf)
                 _vpn["name"] = vpn
-        self.vpns[vpn] = _vpn
+                print _vpn
+                if vpn == self.vpn_connected:
+                    _vpn["status"] = True
+                self.vpns[vpn] = _vpn
         return self.vpns
 
     def external_ip(self):
