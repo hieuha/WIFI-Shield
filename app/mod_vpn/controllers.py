@@ -21,6 +21,5 @@ def external_ip():
 @mod_vpn.route("/connect", methods=["POST"])
 def connect():
     vpn_name = request.form.get("vpn")
-    vpn.connect(vpn_name)
-    vpn_status = vpn.status()
-    return jsonify(vpn_status)
+    response = vpn.connect(vpn_name)
+    return jsonify(response)

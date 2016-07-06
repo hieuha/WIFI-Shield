@@ -3,6 +3,7 @@ from app import app
 from re import search
 import ipgetter
 import subprocess
+import signal
 from werkzeug.utils import secure_filename
 
 
@@ -27,35 +28,39 @@ class VPN(object):
 
     def __init__(self):
         self.vpns = dict()
-        self.vpn_client_pid = 99999999999
+        self.vpn_client_pid = 999999
 
     def connect(self, vpn):
+        self.disconnect()
+        response = {"message": None, "pid": None, "status": False}
         vpn = secure_filename(vpn)
-        path_vpn = "/opt/WIFI-Shield/openvpn/"+ vpn +"/"
+        path_vpn = "/opt/WIFI-Shield/openvpn/" + vpn + "/"
+        command = "/usr/bin/nohup /usr/sbin/openvpn --config " + path_vpn + "client.ovpn >/dev/null 2>&1 & /bin/echo $!"
+        print self.status()
         if os.path.exists(path_vpn):
             if os.path.exists("/usr/bin/nohup") and os.path.exists("/usr/sbin/openvpn"):
-                command = "/usr/bin/nohup /usr/sbin/openvpn --config "+ path_vpn +"client.ovpn >/dev/null 2>&1 & /bin/echo $!"
-                print command
                 proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
                 self.vpn_client_pid = int(proc.communicate()[0].strip())
+                response["message"] = "Connected to VPN Server"
+                response["pid"] = self.vpn_client_pid
+                response["status"] = True
             else:
-                print "nohup or openvpn is not found!"
-        return self.vpn_client_pid
+                response["message"] = "nohup or openvpn is not found!"
+        return response
 
     def disconnect(self):
-        pass
+        try:
+            os.kill(self.vpn_client_pid, signal.SIGTERM)
+        except OSError:
+            return False
+        else:
+            return True
 
     def status(self):
-        response = {"message": None, "error": None}
-        message = None
-        try:
-            os.kill(self.vpn_client_pid, 0)
-        except OSError:
-            response["error"] = True
-        else:
-            response["error"] = False
-            response["message"] = self.vpn_client_pid
-        return response
+        pid_path = "/proc/%s" % (self.vpn_client_pid)
+        if os.path.exists(pid_path):
+            return True
+        return False
 
 
     def get_list(self):
