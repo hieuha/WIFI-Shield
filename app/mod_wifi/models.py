@@ -11,8 +11,6 @@ class Wifi:
         self.cells = None
 
     def scan(self):
-        message = None
-        error = False
         network = list()
         try:
             self.cells = Cell.all(self.interface)
@@ -22,7 +20,7 @@ class Wifi:
                     network.append(ssid)
             self.networks["ssid"] = network
         except Exception, e:
-            self.networks["message"] = e
+            self.networks["message"] = str(e)
             self.networks["error"] = True
         return self.networks
 

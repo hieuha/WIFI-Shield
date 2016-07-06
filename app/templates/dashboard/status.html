@@ -1,43 +1,37 @@
 {% extends "layout/index.html" %}
+{% block script%}
+<script src="{{ url_for('static', filename='assets/app/js/device.js') }}"></script>
+{% endblock %}
 {% block body %}
 <div class="jumbotron">
-
-<h4 align="left">Battery Remaining</h4>
-<div class="progress">
-   <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-    <span class="sr-only">80% Complete (danger)</span>
-  </div>
-</div>
-<h4 align="left">Internet Connection</h4>
-<div id="ip"></div>
-<h4 align="left">Interfaces</h4>
-<div class="row">
+  <h4 align="left">Internet Connection</h4>
+  <div id="ip"></div>
+  <h4 align="left">Interfaces</h4>
+  <div class="row">
     {% for interface in interfaces %}
-        <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <div class="caption">
-            <h5>{{ interface }}</h5>
-            <p>{{ interfaces[interface] }}</p>
-          </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <div class="caption">
+          <h5>{{ interface }}</h5>
+          <p>{{ interfaces[interface] }}</p>
         </div>
-        </div>
+      </div>
+    </div>
     {% endfor %}
-</div>
-<h4 align="left">VPN</h4>
-<div class="row">
+  </div>
+  <h4 align="left">VPN</h4>
+  <div class="row">
     {% for vpn in vpns %}
-        <div class="col-sm-6 col-md-4" id="{{ vpns[vpn]["ip"] }}">
-        <div class="thumbnail">
-          <div class="caption">
-            <h5>{{ vpn }}</h5>
-            <p>{{ vpns[vpn]["ip"] }}</p>
-          </div>
+    <div class="col-sm-6 col-md-4" id="{{ vpns[vpn]["ip"] }}">
+      <div class="thumbnail">
+        <div class="caption">
+          <h5>{{ vpn }}</h5>
+          <p>{{ vpns[vpn]["ip"] }}</p>
         </div>
-        </div>
+      </div>
+    </div>
     {% endfor %}
+  </div>
+  {#alert-success#}
 </div>
-{#alert-success#}
-</div>
-<script src="{{ url_for('static', filename='assets/js/device.js') }}"></script>
-
 {% endblock %}
