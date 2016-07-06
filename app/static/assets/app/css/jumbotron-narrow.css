@@ -94,3 +94,6 @@ body {
 [v-cloak] {
   display: none;
 }
+.vpn {
+  cursor: pointer;
+}

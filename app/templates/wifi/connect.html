@@ -26,10 +26,10 @@
                     self.error = data.error;
                     self.message = data.message;
                     self.networks = data.ssid;
-                    if (self.error) {
-                        return alert('Có lỗi xảy ra:' + self.message)
-                    }
                     self.scanning = false;
+                    if (self.error) {
+                        return;
+                    }
                 }, 'json')
             }
         },
@@ -49,32 +49,36 @@
         <div v-cloak>
             <div class="alert alert-danger" role="alert" v-if="error">{{ message }}</div>
             <div class="alert alert-success" role="alert" v-if="!error && message">{{ message }}</div>
-        </div>
-        <div class="form-group">
-            <label for="ssid">SSID</label>
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-signal"></i></span>
-                <select class="form-control" name="ssid" id="ssid" :disabled="notAvailable ? 'disabled' : null">
-                    <option v-for="network in networks" v-bind:value="network" v-cloak>
-                    {{ network }}
-                    </option>
-                </select>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="ssid">SSID</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-signal"></i></span>
+                        <select class="form-control" name="ssid" id="ssid" :disabled="notAvailable ? 'disabled' : null">
+                            <option v-for="network in networks" v-bind:value="network">
+                            {{ network }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="password">Password</label>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" class="form-control" name="password" id="password" :disabled="notAvailable ? 'disabled' : null" placeholder="Password">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" :disabled="notAvailable ? 'disabled' : null" class="btn btn-lg btn-success">Connect</button>
+                <button type="button" :disabled="notAvailable ? 'disabled' : null" class="btn btn-lg btn-info"
+                @click.prevent="scan"
+                v-text="scanning ? 'Scanning' : 'Refresh'"
+                ></button>
             </div>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                <input type="password" class="form-control" name="password" id="password" :disabled="notAvailable ? 'disabled' : null" placeholder="Password">
-            </div>
-        </div>
-        <p>
-            <button type="submit" :disabled="notAvailable ? 'disabled' : null" class="btn btn-lg btn-success">Connect</button>
-            <button type="button" :disabled="notAvailable ? 'disabled' : null" class="btn btn-lg btn-info"
-            @click.prevent="scan"
-            v-text="scanning ? 'Scanning' : 'Refresh'"
-            ></button>
-        </p>
     {% endraw %}
     </form>
 </div>

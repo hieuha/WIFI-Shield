@@ -34,14 +34,13 @@ class VPN(object):
     def connect(self, vpn):
         self.disconnect()
         vpn = secure_filename(vpn)
-        response = {"message": None, "pid": None, "status": False, "name": vpn}
+        response = {"message": None, "pid": None, "status": False, "name": vpn, "last": self.vpn_connected}
 
         if vpn == "":
             response["message"] = "vpn is empty!"
             return response
         path_vpn = VPN_FOLDER + vpn + "/"
         command = "/usr/bin/nohup /usr/sbin/openvpn --cd " + path_vpn + " --config client.ovpn >/dev/null 2>&1 & /bin/echo $!"
-        print command
         if os.path.exists(path_vpn):
             if os.path.exists("/usr/bin/nohup") and os.path.exists("/usr/sbin/openvpn"):
                 proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -58,7 +57,6 @@ class VPN(object):
         try:
             if self.vpn_client_pid:
                 os.kill(self.vpn_client_pid, signal.SIGTERM)
-                self.vpn_connected = None
         except OSError:
             return False
         else:

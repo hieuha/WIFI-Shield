@@ -13,5 +13,4 @@ vpn = VPN()
 def index():
     interfaces = device.interfaces()
     vpns = vpn.get_list()
-    return render_template("dashboard/status.html",
-                           interfaces=interfaces, vpns=vpns)
+    return render_template("dashboard/status.html", interfaces=interfaces, vpns=vpns)

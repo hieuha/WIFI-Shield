@@ -11,7 +11,6 @@ def scan():
     if networks is not None:
         return jsonify(networks)
 
-
 @mod_wifi.route('/connect', methods=['GET', 'POST'])
 def connect():
     message = ""

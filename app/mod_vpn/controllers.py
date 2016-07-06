@@ -4,11 +4,10 @@ mod_vpn = Blueprint('vpn', __name__, url_prefix='/vpn')
 vpn = VPN()
 
 
-@mod_vpn.route("/list", methods=["GET"])
-def list_vpn():
-    response = {"list": list()}
-    vpns = vpn.get_list()
-    response["list"] = vpns
+@mod_vpn.route("/", methods=["GET"])
+def index():
+    response = {"data": list()}
+    response["data"] = vpn.get_list()
     return jsonify(response)
 
 

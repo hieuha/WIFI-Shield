@@ -1,37 +1,110 @@
 {% extends "layout/index.html" %}
 {% block script%}
-<script src="{{ url_for('static', filename='assets/app/js/device.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/app/js/vue.min.js') }}"></script>
+<script>
+    new Vue({
+        el: '#wifi-dashboard',
+        data: {
+            device: {
+                active: false,
+                message: "",
+                checking: true
+            },
+            vpns: []
+        },
+        methods: {
+            selectVPN: function (key) {
+                var self = this;
+                if (!self.device.active) {
+                    alert("You're offline!")
+                }
+                $.post(window.URL_VPN_CONNECT, {vpn: key}, function (data) {
+                    if (!data.name || !data.status) {
+                        return;
+                    }
+                    if (!self.vpns[data.name]) {
+                        return;
+                    }
+                    self.vpns[data.name].status = data.status;
+                    if (data.last && self.vpns[data.last]) {
+                        self.vpns[data.last].status = false;
+                    }
+                }, 'json');
+            },
+            fetchVPNS: function () {
+                var self = this;
+                $.get(window.URL_VPN_INDEX, function (data) {
+                    self.vpns = data.data;
+                }, 'json');
+            },
+            checkConnection: function () {
+                var self = this;
+                if (document.hidden) {
+                    return self.checkConnectionOnFinished()
+                }
+                self.device.checking = true;
+                $.get(window.URL_DEVICE_CONNECTION, function (data) {
+                    data.checking = false;
+                    self.device = data;
+                    self.checkConnectionOnFinished();
+                }, 'json')
+            },
+            checkConnectionOnFinished: function () {
+                var self = this;
+                setTimeout(function () {
+                    self.checkConnection()
+                }, 60000)
+            }
+        },
+        ready: function () {
+            this.fetchVPNS();
+            this.checkConnection();
+        }
+    })
+</script>
 {% endblock %}
 {% block body %}
-<div class="jumbotron">
-  <h4 align="left">Internet Connection</h4>
-  <div id="ip"></div>
-  <h4 align="left">Interfaces</h4>
-  <div class="row">
-    {% for interface in interfaces %}
-    <div class="col-sm-6 col-md-4">
-      <div class="thumbnail">
-        <div class="caption">
-          <h5>{{ interface }}</h5>
-          <p>{{ interfaces[interface] }}</p>
+<div class="jumbotron" id="wifi-dashboard">
+    {% raw %}
+    <div class="clearfix">
+        <h4 align="left">Internet Connection</h4>
+        <div v-if="!device.checking"  v-cloak>
+            <div class="alert alert-success" role="alert" v-if="device.active">{{ device.message }}</div>
+            <div class="alert alert-danger" role="alert" v-if="!device.active">{{ device.message }}</div>
         </div>
-      </div>
+        <div class="alert alert-info" role="alert" v-show="device.checking">Checking...</div>
     </div>
-    {% endfor %}
-  </div>
-  <h4 align="left">VPN</h4>
-  <div class="row">
-    {% for vpn in vpns %}
-    <div class="col-sm-6 col-md-4" id="{{ vpns[vpn]["ip"] }}">
-      <div class="thumbnail">
-        <div class="caption">
-          <h5>{{ vpn }}</h5>
-          <p>{{ vpns[vpn]["ip"] }}</p>
+    <div class="clearfix">
+        <h4 align="left">VPNs</h4>
+        <div class="row" v-cloak>
+            <div class="col-sm-6 col-md-4" v-for="vpn in vpns" @click.prevent="selectVPN($key)">
+                <div :class="['panel', 'vpn', 'panel-default', {'panel-success': vpn.status}]">
+                    <div class="panel-heading">
+                        {{ $key }}
+                    </div>
+                    <div class="panel-body">
+                        <p>{{ vpn.ip }}</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    {% endfor %}
-  </div>
-  {#alert-success#}
+    {% endraw %}
+    <div class="clearfix">
+        <h4 align="left">Interfaces</h4>
+        <div class="row">
+            {% for interface in interfaces %}
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h5>{{ interface }}</h5>
+                        <p>{{ interfaces[interface] }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {#alert-success#}
 </div>
 {% endblock %}
