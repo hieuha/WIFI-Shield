@@ -40,7 +40,8 @@ class VPN(object):
             response["message"] = "vpn is empty!"
             return response
         path_vpn = VPN_FOLDER + vpn + "/"
-        command = "/usr/bin/nohup /usr/sbin/openvpn --config " + path_vpn + "client.ovpn >/dev/null 2>&1 & /bin/echo $!"
+        command = "/usr/bin/nohup /usr/sbin/openvpn --cd " + path_vpn + " --config client.ovpn >/dev/null 2>&1 & /bin/echo $!"
+        print command
         if os.path.exists(path_vpn):
             if os.path.exists("/usr/bin/nohup") and os.path.exists("/usr/sbin/openvpn"):
                 proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
