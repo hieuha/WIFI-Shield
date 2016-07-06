@@ -41,7 +41,6 @@ class VPN(object):
             return response
         path_vpn = VPN_FOLDER + vpn + "/"
         command = "/usr/bin/nohup /usr/sbin/openvpn --config " + path_vpn + "client.ovpn >/dev/null 2>&1 & /bin/echo $!"
-        print self.status()
         if os.path.exists(path_vpn):
             if os.path.exists("/usr/bin/nohup") and os.path.exists("/usr/sbin/openvpn"):
                 proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -83,7 +82,6 @@ class VPN(object):
                 _vpn["conf"] = conf
                 _vpn["ip"] = parse_ip(conf)
                 _vpn["name"] = vpn
-                print _vpn
                 if vpn == self.vpn_connected:
                     _vpn["status"] = True
                 self.vpns[vpn] = _vpn
