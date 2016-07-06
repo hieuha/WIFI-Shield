@@ -33,8 +33,9 @@ class VPN(object):
 
     def connect(self, vpn):
         self.disconnect()
-        response = {"message": None, "pid": None, "status": False}
         vpn = secure_filename(vpn)
+        response = {"message": None, "pid": None, "status": False, "name": vpn}
+
         if vpn == "":
             response["message"] = "vpn is empty!"
             return response
