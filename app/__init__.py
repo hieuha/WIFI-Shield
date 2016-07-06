@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 
 app = Flask(__name__)
-app.config.from_pyfile("../config.cfg")
+app.config.from_pyfile("../config.py")
 
 from app.mod_page.controllers import mod_page as page_module
 from app.mod_wifi.controllers import mod_wifi as wifi_module
