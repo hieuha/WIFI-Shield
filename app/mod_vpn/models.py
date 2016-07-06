@@ -9,6 +9,7 @@ VPN_FOLDER = app.config["BASE_DIR"] + "/openvpn/"
 
 
 def parse_ip(conf):
+    ip = None
     if os.path.exists(conf):
         f = open(conf, "r")
         content = f.read()
@@ -38,14 +39,17 @@ class VPN(object):
 
     def get_list(self):
         vpn_configs = os.listdir(VPN_FOLDER)
+        print vpn_configs
         _vpn = {"conf": None,
                "ip": None,
                "status": None}
         for vpn in vpn_configs:
-            conf = VPN_FOLDER + vpn + "/" + "client.ovpn"
-            _vpn["conf"] = conf
-            _vpn["ip"] = parse_ip(conf)
-            self.vpns[vpn] = _vpn
+            vpn_path = VPN_FOLDER + vpn
+            if os.path.isdir(vpn_path):
+                conf =  vpn_path + "/" + "client.ovpn"
+                _vpn["conf"] = conf
+                _vpn["ip"] = parse_ip(conf)
+                self.vpns[vpn] = _vpn
         return self.vpns
 
     def external_ip(self):
