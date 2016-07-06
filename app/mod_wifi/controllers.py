@@ -14,10 +14,8 @@ def scan():
 
 @mod_wifi.route('/connect', methods=['GET', 'POST'])
 def connect():
-    networks = wifi.networks
-    networks = wifi.scan()
-    message = networks["message"]
-    error = networks["error"]
+    message = ""
+    error = False
     if request.method == "POST":
         form = request.form
         ssid = form["ssid"]
@@ -27,7 +25,5 @@ def connect():
         message, error = wifi.connect()
         if not error:
             return redirect(url_for('dashboard.index'))
-    return render_template("wifi/connect.html",
-                           networks=networks,
-                           message=message,
-                           error=error)
+        return render_template("wifi/connect.html", message=message, error=error)
+    return render_template("wifi/connect.html", message=message, error=error)

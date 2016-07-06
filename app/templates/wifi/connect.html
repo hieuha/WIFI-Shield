@@ -1,37 +1,81 @@
 {% extends "layout/index.html" %}
+{% block script%}
+<script src="{{ url_for('static', filename='assets/app/js/vue.min.js') }}"></script>
+<script>
+    new Vue({
+        el: '#wifi-connect',
+        data: {
+            scanning: false,
+            error: {{ error | tojson }},
+            message: "{{ message | safe }}",
+            networks: []
+        },
+        computed: {
+            notAvailable: function () {
+                return this.scanning || this.error;
+            }
+        },
+        methods: {
+            scan: function () {
+                var self = this;
+                if (this.notAvailable) {
+                    return;
+                }
+                this.scanning = true;
+                $.get(window.URL_WIFI_SCAN, function (data) {
+                    self.error = data.error;
+                    self.message = data.message;
+                    self.networks = data.ssid;
+                    if (self.error) {
+                        return alert('Có lỗi xảy ra:' + self.message)
+                    }
+                    self.scanning = false;
+                }, 'json')
+            }
+        },
+        ready: function () {
+            this.scan()
+        }
+    })
+</script>
+{% endblock %}
 {% block body %}
-<div class="jumbotron">
-
-<h2>WIFI CONFIGURATION</h2>
-<form name="connectwifi" id="connectwifi" class="form-horizontal" role="form" method="POST" action="{{ url_for('wifi.connect') }}">
-<p class="lead">
-  <p> Protect your privacy and security online!</p>
-    {% if error %}
-        <div class="alert alert-danger" role="alert">{{ message }}</div>
-    {% else %}
-        {% if message %}
-            <div class="alert alert-success" role="alert">{{ message }}</div>
-        {% endif %}
-    {% endif %}
-    <div style="margin-bottom: 25px" class="input-group input-group-lg">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-signal"></i></span>
-        <select class="form-control" id="sel1" name="ssid">
-            {% for network in networks["ssid"] %}
-            <option value="{{ network }}">{{ network }}</option>
-            {% endfor%}
-        </select>
-    </div>
-    <div style="margin-bottom: 25px" class="input-group input-group-lg">
-      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-      <input type="password" class="form-control" name="password" placeholder="Password">
-    </div>
-</p>
-<p>
-    <button {% if error %}disabled{% endif %} type="button" id="btnScanning" class="btn btn-lg btn-info" aria-label="Left Align" >Scan</button>
-    <button {% if error %}disabled{% endif %} type="submit" class="btn btn-lg btn-success" aria-label="Right Align" >Connect to WIFI</button>
-
-</p>
-</form>
-<script src="{{ url_for('static', filename='assets/js/wifi.js') }}"></script>
+<div class="jumbotron" id="wifi-connect">
+    <h2>Network Connection</h2>
+    <form class="form-horizontal" role="form" method="POST" action="{{ url_for('wifi.connect') }}">
+    {% raw %}
+        <p class="lead"> You must first connect to a wifi network</p>
+        <div class="alert alert-info" role="alert" v-show="scanning">Scanning</div>
+        <div v-cloak>
+            <div class="alert alert-danger" role="alert" v-if="error">{{ message }}</div>
+            <div class="alert alert-success" role="alert" v-if="!error && message">{{ message }}</div>
+        </div>
+        <div class="form-group">
+            <label for="ssid">SSID</label>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-signal"></i></span>
+                <select class="form-control" name="ssid" id="ssid" :disabled="notAvailable ? 'disabled' : null">
+                    <option v-for="network in networks" v-bind:value="network" v-cloak>
+                    {{ network }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input type="password" class="form-control" name="password" id="password" :disabled="notAvailable ? 'disabled' : null" placeholder="Password">
+            </div>
+        </div>
+        <p>
+            <button type="submit" :disabled="notAvailable ? 'disabled' : null" class="btn btn-lg btn-success">Connect</button>
+            <button type="button" :disabled="notAvailable ? 'disabled' : null" class="btn btn-lg btn-info"
+            @click.prevent="scan"
+            v-text="scanning ? 'Scanning' : 'Refresh'"
+            ></button>
+        </p>
+    {% endraw %}
+    </form>
 </div>
 {% endblock %}
