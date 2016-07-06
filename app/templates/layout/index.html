@@ -18,7 +18,9 @@
     <![endif]-->
     <script>
       var URL_WIFI_SCAN = "{{ url_for('wifi.scan') }}";
-      var URL_CHECK_INTERNET = "{{ url_for('device.check_internet') }}";
+      var URL_VPN_INDEX = "{{ url_for('vpn.index') }}";
+      var URL_DEVICE_CONNECTION = "{{ url_for('device.connection') }}";
+      var URL_VPN_CONNECT = "{{ url_for('vpn.connect') }}";
     </script>
   </head>
   <body>
@@ -46,7 +48,7 @@
       </footer>
     </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='assets/app/js/jquery.min.js') }}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
     {% block script %}
