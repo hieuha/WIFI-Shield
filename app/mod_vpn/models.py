@@ -34,6 +34,9 @@ class VPN(object):
         self.disconnect()
         response = {"message": None, "pid": None, "status": False}
         vpn = secure_filename(vpn)
+        if vpn == "":
+            response["message"] = "vpn is empty!"
+            return response
         path_vpn = "/opt/WIFI-Shield/openvpn/" + vpn + "/"
         command = "/usr/bin/nohup /usr/sbin/openvpn --config " + path_vpn + "client.ovpn >/dev/null 2>&1 & /bin/echo $!"
         print self.status()
@@ -67,14 +70,17 @@ class VPN(object):
         vpn_configs = os.listdir(VPN_FOLDER)
         _vpn = {"conf": None,
                "ip": None,
-               "status": None}
+               "status": None,
+                "name": None}
+        _vpns = list()
         for vpn in vpn_configs:
             vpn_path = VPN_FOLDER + vpn
             if os.path.isdir(vpn_path):
                 conf =  vpn_path + "/" + "client.ovpn"
                 _vpn["conf"] = conf
                 _vpn["ip"] = parse_ip(conf)
-                self.vpns[vpn] = _vpn
+                _vpn["name"] = vpn
+        self.vpns[vpn] = _vpn
         return self.vpns
 
     def external_ip(self):
