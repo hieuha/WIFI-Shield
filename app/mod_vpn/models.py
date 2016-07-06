@@ -3,6 +3,7 @@ from app import app
 from re import search
 import ipgetter
 import subprocess
+from werkzeug.utils import secure_filename
 
 
 VPN_FOLDER = app.config["BASE_DIR"] + "/openvpn/"
@@ -26,20 +27,39 @@ class VPN(object):
 
     def __init__(self):
         self.vpns = dict()
+        self.vpn_client_pid = 99999999999
 
-    def connect(self):
-        command = '/usr/sbin/openvpn %s' % VPN_FOLDER + "DO-SGP1/client.ovpn"
-        proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    def connect(self, vpn):
+        vpn = secure_filename(vpn)
+        path_vpn = "/opt/WIFI-Shield/openvpn/"+ vpn +"/"
+        if os.path.exists(path_vpn):
+            if os.path.exists("/usr/bin/nohup") and os.path.exists("/usr/sbin/openvpn"):
+                command = "/usr/bin/nohup /usr/sbin/openvpn --config "+ path_vpn +"client.ovpn >/dev/null 2>&1 & /bin/echo $!"
+                print command
+                proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+                self.vpn_client_pid = int(proc.communicate()[0].strip())
+            else:
+                print "nohup or openvpn is not found!"
+        return self.vpn_client_pid
 
     def disconnect(self):
         pass
 
     def status(self):
-        pass
+        response = {"message": None, "error": None}
+        message = None
+        try:
+            os.kill(self.vpn_client_pid, 0)
+        except OSError:
+            response["error"] = True
+        else:
+            response["error"] = False
+            response["message"] = self.vpn_client_pid
+        return response
+
 
     def get_list(self):
         vpn_configs = os.listdir(VPN_FOLDER)
-        print vpn_configs
         _vpn = {"conf": None,
                "ip": None,
                "status": None}
