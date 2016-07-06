@@ -38,7 +38,7 @@ class VPN(object):
         if vpn == "":
             response["message"] = "vpn is empty!"
             return response
-        path_vpn = "/opt/WIFI-Shield/openvpn/" + vpn + "/"
+        path_vpn = VPN_FOLDER + vpn + "/"
         command = "/usr/bin/nohup /usr/sbin/openvpn --config " + path_vpn + "client.ovpn >/dev/null 2>&1 & /bin/echo $!"
         print self.status()
         if os.path.exists(path_vpn):
