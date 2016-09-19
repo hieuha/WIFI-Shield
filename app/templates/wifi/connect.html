@@ -53,7 +53,7 @@
                 <div class="col-md-12">
                     <label for="ssid">SSID</label>
                     <div class="input-group input-group-lg">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-signal"></i></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-signal" aria-hidden="true"></span></span>
                         <select class="form-control" name="ssid" id="ssid" :disabled="notAvailable ? 'disabled' : null">
                             <option v-for="network in networks" v-bind:value="network">
                             {{ network }}
@@ -66,7 +66,7 @@
                 <div class="col-md-12">
                     <label for="password">Password</label>
                     <div class="input-group input-group-lg">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></span>
                         <input type="password" class="form-control" name="password" id="password" :disabled="notAvailable ? 'disabled' : null" placeholder="Password">
                     </div>
                 </div>

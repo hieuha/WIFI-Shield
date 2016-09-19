@@ -67,15 +67,15 @@
 <div class="jumbotron" id="wifi-dashboard">
     {% raw %}
     <div class="clearfix">
-        <h4 align="left">Internet Connection</h4>
-        <div v-if="!device.checking"  v-cloak>
+        <h4 class="text-left">Internet Connection</h4>
+        <div v-if="!device.checking" v-cloak>
             <div class="alert alert-success" role="alert" v-if="device.active">{{ device.message }}</div>
             <div class="alert alert-danger" role="alert" v-if="!device.active">{{ device.message }}</div>
         </div>
         <div class="alert alert-info" role="alert" v-show="device.checking">Checking...</div>
     </div>
     <div class="clearfix">
-        <h4 align="left">VPNs</h4>
+        <h4 class="text-left">VPNs</h4>
         <div class="row" v-cloak>
             <div class="col-sm-6 col-md-4" v-for="vpn in vpns" @click.prevent="selectVPN($key)">
                 <div :class="['panel', 'vpn', 'panel-default', {'panel-success': vpn.status}]">
@@ -91,7 +91,7 @@
     </div>
     {% endraw %}
     <div class="clearfix">
-        <h4 align="left">Interfaces</h4>
+        <h4 class="text-left">Interfaces</h4>
         <div class="row">
             {% for interface in interfaces %}
             <div class="col-sm-6 col-md-4">
